@@ -25,7 +25,8 @@ Unreleased
 
 - The HTML report now shows separate coverage totals for statements and
   branches, as well as the usual combined coverage percentage. Thanks to Ryuta
-  for the `discussion <issue 2081_>`_ and the `implementation <pull 2085_>`_.
+  Otsuka for the `discussion <issue 2081_>`_ and the `implementation
+  <pull 2085_>`_.
 
 - Fix: ``except*`` clauses were not handled properly under the "sysmon"
   measurement core, causing KeyError exceptions as described in `issue 2086`_.
