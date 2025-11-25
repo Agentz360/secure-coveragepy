@@ -384,7 +384,7 @@ include a short string at the end, the name of the warning. See
 [run] debug
 ...........
 
-(multi-string) A list of debug options.  See :ref:`the run --debug option
+(multi-string) A list of debug options.  See :ref:`the run -‍-debug option
 <cmd_run_debug>` for details.
 
 
@@ -393,7 +393,7 @@ include a short string at the end, the name of the warning. See
 [run] debug_file
 ................
 
-(string) A file name to write debug output to.  See :ref:`the run --debug
+(string) A file name to write debug output to.  See :ref:`the run -‍-debug
 option <cmd_run_debug>` for details.
 
 
@@ -651,7 +651,7 @@ file being reported.  Combining multiple files requires the ``combine``
 command.
 
 The ``--debug=pathmap`` option can be used to log details of the re-mapping of
-paths.  See :ref:`the --debug option <cmd_run_debug>`.
+paths.  See :ref:`the -‍-debug option <cmd_run_debug>`.
 
 See :ref:`cmd_combine_remapping` and :ref:`source_glob` for more information.
 
