@@ -1393,9 +1393,9 @@ class ProcessStartupTest(CoverageTest):
         self.make_file(
             "sub.py",
             """\
-            f = open("out.txt", "w", encoding="utf-8")
-            f.write("Hello, world!\\n")
-            f.close()
+            with open("out.txt", "w", encoding="utf-8") as f:
+                f.write("Hello, world!\\n")
+            a = 3
             """,
         )
 
@@ -1763,9 +1763,9 @@ class ProcessStartupWithSourceTest(CoverageTest):
         self.make_file(
             path("sub.py"),
             """\
-            f = open("out.txt", "w", encoding="utf-8")
-            f.write("Hello, world!")
-            f.close()
+            with open("out.txt", "w", encoding="utf-8") as f:
+                f.write("Hello, world!")
+            a = 3
             """,
         )
         self.make_file(
