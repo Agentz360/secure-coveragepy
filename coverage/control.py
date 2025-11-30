@@ -355,13 +355,13 @@ class Coverage(TConfigurable):
             _prevent_sub_process_measurement()
 
     def __repr__(self) -> str:
-        assert self._core is not None
-        assert self._data is not None
+        core_name = self._core.tracer_class.__name__ if self._core is not None else "-none-"
+        data_file = repr(self._data._filename) if self._data is not None else "-none-"
         return (
             "<Coverage"
             + f" @0x{id(self):x}"
-            + f" core={self._core.tracer_class.__name__}"
-            + f" data_file={self._data._filename!r}"
+            + f" core={core_name}"
+            + f" data_file={data_file}"
             + ">"
         )
 
