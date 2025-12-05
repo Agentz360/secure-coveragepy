@@ -1372,7 +1372,6 @@ class YankedDirectoryTest(CoverageTest):
 
 
 @pytest.mark.skipif(env.METACOV, reason="Can't test subprocess pth file during metacoverage")
-@pytest.mark.xdist_group(name="needs_pth")
 class ProcessStartupTest(CoverageTest):
     """Test that we can measure coverage in subprocesses."""
 
@@ -1594,7 +1593,6 @@ class ProcessStartupTest(CoverageTest):
 
 
 @pytest.mark.skipif(env.WINDOWS, reason="patch=execv isn't supported on Windows")
-@pytest.mark.xdist_group(name="needs_pth")
 class ExecvTest(CoverageTest):
     """Test that we can measure coverage in subprocesses."""
 
@@ -1689,7 +1687,6 @@ class ProcessStartupWithSourceTest(CoverageTest):
     @pytest.mark.parametrize("dashm", ["-m", ""])
     @pytest.mark.parametrize("package", ["pkg", ""])
     @pytest.mark.parametrize("source", ["main", "sub"])
-    @pytest.mark.xdist_group(name="needs_pth")
     def test_pth_and_source_work_together(
         self,
         dashm: str,
