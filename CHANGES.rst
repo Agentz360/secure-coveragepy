@@ -29,13 +29,14 @@ Unreleased
   Closes `issue 1643`_ thanks to `Olena Yefymenko <pull 1952_>`_.
 
 - The .pth file we install was done incorrectly and didn't work when using
-  the source wheel (`py3-none-any`).  This is now fixed. Thanks, `Henry
+  the source wheel (``py3-none-any``).  This is now fixed. Thanks, `Henry
   Schreiner <pull 2100_>`_.
 
 - Deprecated: when coverage.py is installed, it creates three command entry
-  points: `coverage`, `coverage3`, and `coverage-3.10` (if installed for Python
-  3.10). The second and third of these are not needed and will eventually be
-  removed.
+  points: ``coverage``, ``coverage3``, and ``coverage-3.10`` (if installed for
+  Python 3.10). The second and third of these are not needed and will
+  eventually be removed. They still work for now, but print a message about
+  their deprecation.
 
 .. _issue 1643: https://github.com/coveragepy/coveragepy/issues/1643
 .. _pull 1952: https://github.com/coveragepy/coveragepy/pull/1952
