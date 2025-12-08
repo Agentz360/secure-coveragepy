@@ -20,8 +20,12 @@ upgrading your version of coverage.py.
     ..  Version 9.8.1 — 2027-07-27
     ..  --------------------------
 
-Unreleased
-----------
+.. start-releases
+
+.. _changes_7-13-0:
+
+Version 7.13.0 — 2025-12-08
+---------------------------
 
 - New feature: coverage.py now supports :file:`.coveragerc.toml` configuration
   files. These files use TOML syntax and take priority over
@@ -41,8 +45,6 @@ Unreleased
 .. _issue 1643: https://github.com/coveragepy/coveragepy/issues/1643
 .. _pull 1952: https://github.com/coveragepy/coveragepy/pull/1952
 .. _pull 2100: https://github.com/coveragepy/coveragepy/pull/2100
-
-.. start-releases
 
 .. _changes_7-12-1b1:
 
