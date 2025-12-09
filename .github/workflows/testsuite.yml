@@ -59,7 +59,7 @@ jobs:
 
   tests:
     name: "${{ matrix.python-version }} on ${{ matrix.os }}"
-    runs-on: "${{ matrix.os }}-${{ matrix.os-version || 'latest' }}"
+    runs-on: "${{ matrix.os }}-${{ matrix.os-version }}"
     timeout-minutes: 10
 
     # Don't run tests if the branch name includes "-notests".
@@ -78,6 +78,8 @@ jobs:
           - ubuntu
           - macos
           - windows
+        os-version:
+          - latest
         python-version:
           # When changing this list, be sure to check the [gh] list in
           # tox.ini so that tox will run properly. PYVERSIONS
