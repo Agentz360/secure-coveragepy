@@ -26,6 +26,7 @@ from coverage.data import line_counts
 from coverage.exceptions import ConfigError
 from coverage.files import abs_file
 from coverage.misc import import_local_file
+from coverage.sqldata import SUFFIX_PATTERN
 
 from tests import testenv
 from tests.coveragetest import CoverageTest
@@ -505,7 +506,7 @@ class MultiprocessingTest(CoverageTest):
             assert len(out_lines) == nprocs + 1
             assert all(
                 re.fullmatch(
-                    r"(Combined data file|Skipping duplicate data) \.coverage\..*\.\d+\.X\w{6}x",
+                    rf"(Combined data file|Skipping duplicate data) \.coverage{SUFFIX_PATTERN}",
                     line,
                 )
                 for line in out_lines

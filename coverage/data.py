@@ -23,6 +23,7 @@ from coverage.exceptions import CoverageException, NoDataError
 from coverage.files import PathAliases
 from coverage.misc import Hasher, file_be_gone, human_sorted, plural
 from coverage.sqldata import CoverageData as CoverageData  # pylint: disable=useless-import-alias
+from coverage.sqldata import filename_match
 
 
 def line_counts(data: CoverageData, fullpath: bool = False) -> dict[str, int]:
@@ -95,19 +96,23 @@ def combinable_files(data_file: str, data_paths: Iterable[str] | None = None) ->
     return sorted(files_to_combine)
 
 
-def hash_for_data_file(f: str) -> bytes:
+def hash_for_data_file(dbfilename: str) -> str:
     """Get the hash of the data in the file."""
-    with open(f, "rb") as fobj:
-        hasher = hashlib.new("sha3_256", usedforsecurity=False)
-        hasher.update(fobj.read())
-    return hasher.digest()
+    m = filename_match(dbfilename)
+    if m and m["hash"]:
+        return m["hash"]
+    else:
+        with open(dbfilename, "rb") as fobj:
+            hasher = hashlib.new("sha3_256", usedforsecurity=False)
+            hasher.update(fobj.read())
+        return hasher.hexdigest()
 
 
 class DataFileClassifier:
     """Track what files to combine and which to skip."""
 
     def __init__(self) -> None:
-        self.file_hashes: set[bytes] = set()
+        self.file_hashes: set[str] = set()
 
     def classify(self, f: str) -> Literal["combine", "skip"]:
         """Determine whether to combine or skip this file."""
