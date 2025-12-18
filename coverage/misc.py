@@ -176,10 +176,12 @@ class Hasher:
                 for e in v:
                     self.update(e)
             case dict():
-                keys = v.keys()
-                for k in sorted(keys):
+                for k, kv in sorted(v.items()):
                     self.update(k)
-                    self.update(v[k])
+                    self.update(kv)
+            case set():
+                for e in sorted(v):
+                    self.update(e)
             case _:
                 for k in dir(v):
                     if k.startswith("__"):
@@ -191,8 +193,12 @@ class Hasher:
                     self.update(a)
         self.hash.update(b".")
 
+    def digest(self) -> bytes:
+        """Get the full binary digest of the hash."""
+        return self.hash.digest()
+
     def hexdigest(self) -> str:
-        """Retrieve the hex digest of the hash."""
+        """Retrieve a 32-char hex digest of the hash."""
         return self.hash.hexdigest()[:32]
 
 

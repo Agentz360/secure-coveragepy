@@ -23,6 +23,14 @@ class HasherTest(CoverageTest):
 
     run_in_temp_dir = False
 
+    def test_none_hashing(self) -> None:
+        h1 = Hasher()
+        h1.update([1, None, 2, None])
+        h2 = Hasher()
+        h2.update([1, 2])
+        assert h1.hexdigest() != h2.hexdigest()
+        assert h1.digest() != h2.digest()
+
     def test_string_hashing(self) -> None:
         h1 = Hasher()
         h1.update("Hello, world!")
@@ -32,6 +40,8 @@ class HasherTest(CoverageTest):
         h3.update("Hello, world!")
         assert h1.hexdigest() != h2.hexdigest()
         assert h1.hexdigest() == h3.hexdigest()
+        assert h1.digest() != h2.digest()
+        assert h1.digest() == h3.digest()
 
     def test_bytes_hashing(self) -> None:
         h1 = Hasher()
@@ -39,6 +49,7 @@ class HasherTest(CoverageTest):
         h2 = Hasher()
         h2.update(b"Goodbye!")
         assert h1.hexdigest() != h2.hexdigest()
+        assert h1.digest() != h2.digest()
 
     def test_unicode_hashing(self) -> None:
         h1 = Hasher()
@@ -46,6 +57,7 @@ class HasherTest(CoverageTest):
         h2 = Hasher()
         h2.update("Goodbye!")
         assert h1.hexdigest() != h2.hexdigest()
+        assert h1.digest() != h2.digest()
 
     def test_dict_hashing(self) -> None:
         h1 = Hasher()
@@ -53,6 +65,7 @@ class HasherTest(CoverageTest):
         h2 = Hasher()
         h2.update({"b": 23, "a": 17})
         assert h1.hexdigest() == h2.hexdigest()
+        assert h1.digest() == h2.digest()
 
     def test_dict_collision(self) -> None:
         h1 = Hasher()
@@ -60,6 +73,19 @@ class HasherTest(CoverageTest):
         h2 = Hasher()
         h2.update({"a": 17, "b": {"c": 1}, "d": 2})
         assert h1.hexdigest() != h2.hexdigest()
+        assert h1.digest() != h2.digest()
+
+    def test_set_hashing(self) -> None:
+        h1 = Hasher()
+        h1.update({(1, 2), (3, 4), (5, 6)})
+        h2 = Hasher()
+        h2.update({(5, 6), (1, 2), (3, 4)})
+        h3 = Hasher()
+        h3.update({(1, 2)})
+        assert h1.hexdigest() == h2.hexdigest()
+        assert h1.hexdigest() != h3.hexdigest()
+        assert h1.digest() == h2.digest()
+        assert h1.digest() != h3.digest()
 
 
 class RemoveFileTest(CoverageTest):
