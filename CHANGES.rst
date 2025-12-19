@@ -27,7 +27,7 @@ Unreleased
   third-party code is installed, and avoids measuring it. This shouldn't change
   any behavior. If you find that it does, please get in touch.
 
-- Perf: datafiles that will be combined now record their hash as part of the
+- Perf: data files that will be combined now record their hash as part of the
   file name. This lets us skip duplicate data more quickly, speeding the
   combining step.
 

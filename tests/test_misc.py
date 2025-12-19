@@ -6,9 +6,11 @@
 from __future__ import annotations
 
 import sys
+from typing import Any
 from unittest import mock
 
 import pytest
+from hypothesis import given, strategies as st
 
 from coverage.exceptions import CoverageException
 from coverage.misc import file_be_gone
@@ -16,6 +18,7 @@ from coverage.misc import Hasher, substitute_variables, import_third_party
 from coverage.misc import human_sorted, human_sorted_items, stdout_link
 
 from tests.coveragetest import CoverageTest
+from tests.strategies import nested_data_strategies
 
 
 class HasherTest(CoverageTest):
@@ -86,6 +89,23 @@ class HasherTest(CoverageTest):
         assert h1.hexdigest() != h3.hexdigest()
         assert h1.digest() == h2.digest()
         assert h1.digest() != h3.digest()
+
+    # Use nested_data_schema to generate data schemas, then use it twice in
+    # the test to get two chunks of data with the "same shape" but different
+    # data.
+    @given(nested_data_strategies.flatmap(lambda s: st.tuples(s, s)))
+    def test_same_schema(self, data_pair: tuple[Any, Any]) -> None:
+        data1, data2 = data_pair
+        h1 = Hasher()
+        h1.update(data1)
+        h2 = Hasher()
+        h2.update(data2)
+        if data1 == data2:
+            assert h1.hexdigest() == h2.hexdigest()
+            assert h1.digest() == h2.digest()
+        else:
+            assert h1.hexdigest() != h2.hexdigest()
+            assert h1.digest() != h2.digest()
 
 
 class RemoveFileTest(CoverageTest):
