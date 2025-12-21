@@ -10,7 +10,7 @@ from typing import Any
 from unittest import mock
 
 import pytest
-from hypothesis import given, strategies as st
+from hypothesis import example, given, strategies as st
 
 from coverage.exceptions import CoverageException
 from coverage.misc import file_be_gone
@@ -21,80 +21,38 @@ from tests.coveragetest import CoverageTest
 from tests.strategies import nested_data_strategies
 
 
+# Make two sets which are equal but iterate differently.
+numset1 = set(range(20))
+numset2 = set(range(20))
+for i in range(0, 20, 2):
+    numset2.remove(i)
+for i in range(0, 20, 2):
+    numset2.add(i)
+
+
 class HasherTest(CoverageTest):
     """Test our wrapper of fingerprint hashing."""
 
     run_in_temp_dir = False
 
-    def test_none_hashing(self) -> None:
-        h1 = Hasher()
-        h1.update([1, None, 2, None])
-        h2 = Hasher()
-        h2.update([1, 2])
-        assert h1.hexdigest() != h2.hexdigest()
-        assert h1.digest() != h2.digest()
-
-    def test_string_hashing(self) -> None:
-        h1 = Hasher()
-        h1.update("Hello, world!")
-        h2 = Hasher()
-        h2.update("Goodbye!")
-        h3 = Hasher()
-        h3.update("Hello, world!")
-        assert h1.hexdigest() != h2.hexdigest()
-        assert h1.hexdigest() == h3.hexdigest()
-        assert h1.digest() != h2.digest()
-        assert h1.digest() == h3.digest()
-
-    def test_bytes_hashing(self) -> None:
-        h1 = Hasher()
-        h1.update(b"Hello, world!")
-        h2 = Hasher()
-        h2.update(b"Goodbye!")
-        assert h1.hexdigest() != h2.hexdigest()
-        assert h1.digest() != h2.digest()
-
-    def test_unicode_hashing(self) -> None:
-        h1 = Hasher()
-        h1.update("Hello, world! \N{SNOWMAN}")
-        h2 = Hasher()
-        h2.update("Goodbye!")
-        assert h1.hexdigest() != h2.hexdigest()
-        assert h1.digest() != h2.digest()
-
-    def test_dict_hashing(self) -> None:
-        h1 = Hasher()
-        h1.update({"a": 17, "b": 23})
-        h2 = Hasher()
-        h2.update({"b": 23, "a": 17})
-        assert h1.hexdigest() == h2.hexdigest()
-        assert h1.digest() == h2.digest()
-
-    def test_dict_collision(self) -> None:
-        h1 = Hasher()
-        h1.update({"a": 17, "b": {"c": 1, "d": 2}})
-        h2 = Hasher()
-        h2.update({"a": 17, "b": {"c": 1}, "d": 2})
-        assert h1.hexdigest() != h2.hexdigest()
-        assert h1.digest() != h2.digest()
-
-    def test_set_hashing(self) -> None:
-        h1 = Hasher()
-        h1.update({(1, 2), (3, 4), (5, 6)})
-        h2 = Hasher()
-        h2.update({(5, 6), (1, 2), (3, 4)})
-        h3 = Hasher()
-        h3.update({(1, 2)})
-        assert h1.hexdigest() == h2.hexdigest()
-        assert h1.hexdigest() != h3.hexdigest()
-        assert h1.digest() == h2.digest()
-        assert h1.digest() != h3.digest()
+    def test_scrambled_sets(self) -> None:
+        assert numset1 == numset2
+        assert list(numset1) != list(numset2)
 
     # Use nested_data_schema to generate data schemas, then use it twice in
     # the test to get two chunks of data with the "same shape" but different
     # data.
+    @example(([1, None, 2, None], [1, 2]))
+    @example(("Hello, world!", "Hello, world!"))
+    @example(("Hello", "Goodbye"))
+    @example((b"Hello", b"Goodbye"))
+    @example(("Hello \N{SNOWMAN}", "Goodbye"))
+    @example(({"a": 17, "b": 23}, {"b": 23, "a": 17}))
+    @example(({"a": 17, "b": {"c": 1, "d": 2}}, {"a": 17, "b": {"c": 1}, "d": 2}))
+    @example((numset1, numset2))
+    @example(({(1, 2), (3, 4), (5, 6)}, {(1, 2)}))
     @given(nested_data_strategies.flatmap(lambda s: st.tuples(s, s)))
-    def test_same_schema(self, data_pair: tuple[Any, Any]) -> None:
+    def test_equality_matches_hash(self, data_pair: tuple[Any, Any]) -> None:
         data1, data2 = data_pair
         h1 = Hasher()
         h1.update(data1)
