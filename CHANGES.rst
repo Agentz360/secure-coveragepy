@@ -40,7 +40,8 @@ Unreleased
   1597`_. Thanks to `Ayisha Mohammed <pull 2092_>`_.
 
 - Tests: the test suite misunderstood what core was being tested if
-  COVERAGE_CORE wasn't set on 3.14+.  This is now fixed, closing `issue 2109`_.
+  ``COVERAGE_CORE`` wasn't set on 3.14+.  This is now fixed, closing `issue
+  2109`_.
 
 .. _issue 1597: https://github.com/coveragepy/coveragepy/issues/1597
 .. _pull 2092: https://github.com/coveragepy/coveragepy/pull/2092
