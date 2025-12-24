@@ -27,6 +27,10 @@ Unreleased
   which no other report did, as reported in `issue 2105`_. This is now fixed,
   thanks to Jianrong Zhao.
 
+- Added: the JSON report now includes a ``"start_line"`` key for function and
+  classe regions, indicating the first line of the function or class
+  definition. Closes `issue 2110`_.
+
 - Fix: coverage.py uses a more disciplined approach to detecting where
   third-party code is installed, and avoids measuring it. This shouldn't change
   any behavior. If you find that it does, please get in touch.
@@ -51,6 +55,7 @@ Unreleased
 .. _pull 2092: https://github.com/coveragepy/coveragepy/pull/2092
 .. _issue 2105: https://github.com/coveragepy/coveragepy/issues/2105
 .. _issue 2109: https://github.com/coveragepy/coveragepy/issues/2109
+.. _issue 2110: https://github.com/coveragepy/coveragepy/issues/2110
 
 .. start-releases
 

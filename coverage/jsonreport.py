@@ -151,15 +151,22 @@ class JsonReporter:
                 region_data[region.name] = self.make_region_data(
                     coverage_data,
                     narrower.narrow(region.lines),
+                    region.start,
                 )
 
             region_data[""] = self.make_region_data(
                 coverage_data,
                 narrower.narrow(outside_lines),
+                min(outside_lines, default=1),
             )
         return reported_file
 
-    def make_region_data(self, coverage_data: CoverageData, narrowed_analysis: Analysis) -> JsonObj:
+    def make_region_data(
+        self,
+        coverage_data: CoverageData,
+        narrowed_analysis: Analysis,
+        start_line: int,
+    ) -> JsonObj:
         """Create the data object for one region of a file."""
         narrowed_nums = narrowed_analysis.numbers
         narrowed_summary = self.make_summary(narrowed_nums)
@@ -168,6 +175,7 @@ class JsonReporter:
             "summary": narrowed_summary,
             "missing_lines": sorted(narrowed_analysis.missing),
             "excluded_lines": sorted(narrowed_analysis.excluded),
+            "start_line": start_line,
         }
         if self.config.json_show_contexts:
             contexts = coverage_data.contexts_by_lineno(narrowed_analysis.filename)

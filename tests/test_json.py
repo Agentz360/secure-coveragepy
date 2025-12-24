@@ -164,8 +164,18 @@ class JsonReportTest(UsingModulesMixin, CoverageTest):
             },
         }
         # With regions, a lot of data is duplicated.
-        expected_result["files"]["a.py"]["classes"] = {"": a_py_result}  # type: ignore[index]
-        expected_result["files"]["a.py"]["functions"] = {"": a_py_result}  # type: ignore[index]
+        expected_result["files"]["a.py"]["classes"] = {  # type: ignore[index]
+            "": {
+                **a_py_result,
+                "start_line": 1,
+            }
+        }
+        expected_result["files"]["a.py"]["functions"] = {  # type: ignore[index]
+            "": {
+                **a_py_result,
+                "start_line": 1,
+            }
+        }
         self._assert_expected_json_report(cov, expected_result)
 
     def test_simple_line_coverage(self) -> None:
@@ -206,8 +216,18 @@ class JsonReportTest(UsingModulesMixin, CoverageTest):
             },
         }
         # With regions, a lot of data is duplicated.
-        expected_result["files"]["a.py"]["classes"] = {"": a_py_result}  # type: ignore[index]
-        expected_result["files"]["a.py"]["functions"] = {"": a_py_result}  # type: ignore[index]
+        expected_result["files"]["a.py"]["classes"] = {  # type: ignore[index]
+            "": {
+                **a_py_result,
+                "start_line": 1,
+            }
+        }
+        expected_result["files"]["a.py"]["functions"] = {  # type: ignore[index]
+            "": {
+                **a_py_result,
+                "start_line": 1,
+            }
+        }
         self._assert_expected_json_report(cov, expected_result)
 
     def test_regions_coverage(self) -> None:
@@ -220,6 +240,7 @@ class JsonReportTest(UsingModulesMixin, CoverageTest):
                             "excluded_lines": [],
                             "executed_lines": [2, 4, 8, 9, 11, 12, 16],
                             "missing_lines": [6],
+                            "start_line": 1,
                             "summary": {
                                 "covered_lines": 7,
                                 "excluded_lines": 0,
@@ -235,6 +256,7 @@ class JsonReportTest(UsingModulesMixin, CoverageTest):
                             "excluded_lines": [],
                             "executed_lines": [],
                             "missing_lines": [],
+                            "start_line": 8,
                             "summary": {
                                 "covered_lines": 0,
                                 "excluded_lines": 0,
@@ -250,6 +272,7 @@ class JsonReportTest(UsingModulesMixin, CoverageTest):
                             "executed_lines": [],
                             "excluded_lines": [],
                             "missing_lines": [13, 14, 15, 17],
+                            "start_line": 11,
                             "summary": {
                                 "covered_lines": 0,
                                 "excluded_lines": 0,
@@ -269,6 +292,7 @@ class JsonReportTest(UsingModulesMixin, CoverageTest):
                             "excluded_lines": [],
                             "executed_lines": [2, 4, 8, 9, 11, 12, 16],
                             "missing_lines": [],
+                            "start_line": 1,
                             "summary": {
                                 "covered_lines": 7,
                                 "excluded_lines": 0,
@@ -284,6 +308,7 @@ class JsonReportTest(UsingModulesMixin, CoverageTest):
                             "executed_lines": [],
                             "excluded_lines": [],
                             "missing_lines": [13, 14, 15],
+                            "start_line": 12,
                             "summary": {
                                 "covered_lines": 0,
                                 "excluded_lines": 0,
@@ -299,6 +324,7 @@ class JsonReportTest(UsingModulesMixin, CoverageTest):
                             "executed_lines": [],
                             "excluded_lines": [],
                             "missing_lines": [17],
+                            "start_line": 16,
                             "summary": {
                                 "covered_lines": 0,
                                 "excluded_lines": 0,
@@ -314,6 +340,7 @@ class JsonReportTest(UsingModulesMixin, CoverageTest):
                             "executed_lines": [],
                             "excluded_lines": [],
                             "missing_lines": [6],
+                            "start_line": 4,
                             "summary": {
                                 "covered_lines": 0,
                                 "excluded_lines": 0,
@@ -369,6 +396,7 @@ class JsonReportTest(UsingModulesMixin, CoverageTest):
                             "executed_lines": [2, 4, 8, 9, 11, 12, 16],
                             "missing_branches": [],
                             "missing_lines": [6],
+                            "start_line": 1,
                             "summary": {
                                 "covered_branches": 0,
                                 "covered_lines": 7,
@@ -392,6 +420,7 @@ class JsonReportTest(UsingModulesMixin, CoverageTest):
                             "executed_lines": [],
                             "missing_branches": [],
                             "missing_lines": [],
+                            "start_line": 8,
                             "summary": {
                                 "covered_branches": 0,
                                 "covered_lines": 0,
@@ -415,6 +444,7 @@ class JsonReportTest(UsingModulesMixin, CoverageTest):
                             "executed_lines": [],
                             "missing_branches": [[13, 14], [13, 15]],
                             "missing_lines": [13, 14, 15, 17],
+                            "start_line": 11,
                             "summary": {
                                 "covered_branches": 0,
                                 "covered_lines": 0,
@@ -443,6 +473,7 @@ class JsonReportTest(UsingModulesMixin, CoverageTest):
                             "executed_lines": [2, 4, 8, 9, 11, 12, 16],
                             "missing_branches": [],
                             "missing_lines": [],
+                            "start_line": 1,
                             "summary": {
                                 "covered_branches": 0,
                                 "covered_lines": 7,
@@ -466,6 +497,7 @@ class JsonReportTest(UsingModulesMixin, CoverageTest):
                             "executed_lines": [],
                             "missing_branches": [[13, 14], [13, 15]],
                             "missing_lines": [13, 14, 15],
+                            "start_line": 12,
                             "summary": {
                                 "covered_branches": 0,
                                 "covered_lines": 0,
@@ -489,6 +521,7 @@ class JsonReportTest(UsingModulesMixin, CoverageTest):
                             "executed_lines": [],
                             "missing_branches": [],
                             "missing_lines": [17],
+                            "start_line": 16,
                             "summary": {
                                 "covered_branches": 0,
                                 "covered_lines": 0,
@@ -512,6 +545,7 @@ class JsonReportTest(UsingModulesMixin, CoverageTest):
                             "executed_lines": [],
                             "missing_branches": [],
                             "missing_lines": [6],
+                            "start_line": 4,
                             "summary": {
                                 "covered_branches": 0,
                                 "covered_lines": 0,
@@ -574,6 +608,81 @@ class JsonReportTest(UsingModulesMixin, CoverageTest):
         }
         self._assert_expected_json_report_with_regions(cov, expected_result)
 
+    def test_empty_file(self) -> None:
+        cov = coverage.Coverage()
+        self.make_file("empty.py", "")
+        expected_result = {
+            "files": {
+                "empty.py": {
+                    "classes": {
+                        "": {
+                            "excluded_lines": [],
+                            "executed_lines": [],
+                            "missing_lines": [],
+                            "start_line": 1,
+                            "summary": {
+                                "covered_lines": 0,
+                                "excluded_lines": 0,
+                                "missing_lines": 0,
+                                "num_statements": 0,
+                                "percent_covered": 100.0,
+                                "percent_covered_display": "100",
+                                "percent_statements_covered": 100.0,
+                                "percent_statements_covered_display": "100",
+                            },
+                        },
+                    },
+                    "excluded_lines": [],
+                    "executed_lines": [],
+                    "functions": {
+                        "": {
+                            "excluded_lines": [],
+                            "executed_lines": [],
+                            "missing_lines": [],
+                            "start_line": 1,
+                            "summary": {
+                                "covered_lines": 0,
+                                "excluded_lines": 0,
+                                "missing_lines": 0,
+                                "num_statements": 0,
+                                "percent_covered": 100.0,
+                                "percent_covered_display": "100",
+                                "percent_statements_covered": 100.0,
+                                "percent_statements_covered_display": "100",
+                            },
+                        },
+                    },
+                    "missing_lines": [],
+                    "summary": {
+                        "covered_lines": 0,
+                        "excluded_lines": 0,
+                        "missing_lines": 0,
+                        "num_statements": 0,
+                        "percent_covered": 100.0,
+                        "percent_covered_display": "100",
+                        "percent_statements_covered": 100.0,
+                        "percent_statements_covered_display": "100",
+                    },
+                },
+            },
+            "meta": {
+                "branch_coverage": False,
+                "format": 3,
+                "show_contexts": False,
+            },
+            "totals": {
+                "covered_lines": 0,
+                "excluded_lines": 0,
+                "missing_lines": 0,
+                "num_statements": 0,
+                "percent_covered": 100.0,
+                "percent_covered_display": "100",
+                "percent_statements_covered": 100.0,
+                "percent_statements_covered_display": "100",
+            },
+        }
+        self._compare_json_reports(cov, expected_result, "empty")
+
     def run_context_test(self, relative_files: bool) -> None:
         """A helper for two tests below."""
         self.make_file(
@@ -633,8 +742,18 @@ class JsonReportTest(UsingModulesMixin, CoverageTest):
             },
         }
         # With regions, a lot of data is duplicated.
-        expected_result["files"]["a.py"]["classes"] = {"": a_py_result}  # type: ignore[index]
-        expected_result["files"]["a.py"]["functions"] = {"": a_py_result}  # type: ignore[index]
+        expected_result["files"]["a.py"]["classes"] = {  # type: ignore[index]
+            "": {
+                **a_py_result,
+                "start_line": 1,
+            }
+        }
+        expected_result["files"]["a.py"]["functions"] = {  # type: ignore[index]
+            "": {
+                **a_py_result,
+                "start_line": 1,
+            }
+        }
         self._assert_expected_json_report(cov, expected_result)
 
     def test_context_non_relative(self) -> None:
