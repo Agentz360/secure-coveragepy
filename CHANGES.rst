@@ -23,13 +23,17 @@ upgrading your version of coverage.py.
 Unreleased
 ----------
 
-- Fix: the JSON report used to report module docstrings as executed lines,
-  which no other report did, as reported in `issue 2105`_. This is now fixed,
-  thanks to Jianrong Zhao.
-
 - Added: the JSON report now includes a ``"start_line"`` key for function and
   classe regions, indicating the first line of the function or class
   definition. Closes `issue 2110`_.
+
+- Added: The ``debug data`` command now takes file names as arguments on the
+  command line, so you can inspect specific data files without needing to set
+  ``COVERAGE_FILE``.
+
+- Fix: the JSON report used to report module docstrings as executed lines,
+  which no other report did, as reported in `issue 2105`_. This is now fixed,
+  thanks to Jianrong Zhao.
 
 - Fix: coverage.py uses a more disciplined approach to detecting where
   third-party code is installed, and avoids measuring it. This shouldn't change
@@ -38,10 +42,6 @@ Unreleased
 - Perf: data files that will be combined now record their hash as part of the
   file name. This lets us skip duplicate data more quickly, speeding the
   combining step.
-
-- The ``debug data`` command now takes file names as arguments on the command
-  line, so you can inspect specific data files without needing to set
-  ``COVERAGE_FILE``.
 
 - Docs: added a section explaining more about what is considered a missing
   branch and how it is reported: :ref:`branch_explain`, as requested in `issue
