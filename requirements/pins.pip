@@ -2,3 +2,6 @@
 # For details: https://github.com/coveragepy/coveragepy/blob/main/NOTICE.txt
 
 # Version pins, for use as a constraints file.
+
+# Sphinx 9 wants to move the theme back to 0.5.1, but the newer theme is ok too.
+sphinx-rtd-theme>=3.0.2
