@@ -20,8 +20,12 @@ upgrading your version of coverage.py.
     ..  Version 9.8.1 — 2027-07-27
     ..  --------------------------
 
-Unreleased
-----------
+.. start-releases
+
+.. _changes_7-13-1:
+
+Version 7.13.1 — 2025-12-28
+---------------------------
 
 - Added: the JSON report now includes a ``"start_line"`` key for function and
   class regions, indicating the first line of the region in the source. Closes
@@ -56,8 +60,6 @@ Unreleased
 .. _issue 2105: https://github.com/coveragepy/coveragepy/issues/2105
 .. _issue 2109: https://github.com/coveragepy/coveragepy/issues/2109
 .. _issue 2110: https://github.com/coveragepy/coveragepy/issues/2110
-
-.. start-releases
 
 .. _changes_7-13-0:
 
