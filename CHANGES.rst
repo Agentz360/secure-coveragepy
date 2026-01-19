@@ -23,7 +23,11 @@ upgrading your version of coverage.py.
 Unreleased
 ----------
 
-Nothing yet.
+- Fix: if a data file is created with no read permissions, the combine step
+  would fail completely. Now a warning is issued and the file is skipped.
+  Closes `issue 2117`_.
+
+.. _issue 2117: https://github.com/coveragepy/coveragepy/issues/2117
 
 
 .. start-releases

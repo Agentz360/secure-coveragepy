@@ -40,6 +40,7 @@ from tests.helpers import (
 )
 
 BAD_SQLITE_REGEX = r"file( is encrypted or)? is not a database"
+NO_OPEN_REGEX = r"unable to open database file|Could not open database"
 
 
 class ApiTest(CoverageTest):
@@ -444,13 +445,21 @@ class ApiTest(CoverageTest):
         cov.save()
         self.assert_file_count(".coverage.*", 2)
 
-    def test_combining_corrupt_data(self) -> None:
-        # If you combine a corrupt data file, then you will get a warning,
+    @pytest.mark.parametrize(
+        "problem, msgpattern",
+        [("badcontent", BAD_SQLITE_REGEX), ("noperms", NO_OPEN_REGEX)],
+    )
+    def test_combining_bad_data(self, problem: str, msgpattern: str) -> None:
+        # If you try to combine a bad data file, then you will get a warning,
         # and the file will remain.
         self.make_good_data_files()
         self.make_file(".coverage.foo", """La la la, this isn't coverage data!""")
+        if problem == "noperms":
+            if env.WINDOWS:
+                pytest.skip("os.chmod doesn't work on Windows")
+            os.chmod(".coverage.foo", 0o000)
         cov = coverage.Coverage()
-        warning_regex = r"Couldn't use data file '.*\.coverage\.foo': " + BAD_SQLITE_REGEX
+        warning_regex = r"Couldn't use data file '.*\.coverage\.foo': " + msgpattern
         with self.assert_warnings(cov, [warning_regex]):
             cov.combine()
 
