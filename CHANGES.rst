@@ -20,8 +20,12 @@ upgrading your version of coverage.py.
     ..  Version 9.8.1 — 2027-07-27
     ..  --------------------------
 
-Unreleased
-----------
+.. start-releases
+
+.. _changes_7-13-3:
+
+Version 7.13.3 — 2026-02-03
+---------------------------
 
 - Fix: in some situations, third-party code was measured when it shouldn't have
   been, slowing down test execution. This happened with layered virtual
@@ -31,8 +35,6 @@ Unreleased
 
 .. _issue 2082: https://github.com/coveragepy/coveragepy/issues/2082
 
-
-.. start-releases
 
 .. _changes_7-13-2:
 
